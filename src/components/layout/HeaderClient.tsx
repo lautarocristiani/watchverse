@@ -9,7 +9,7 @@ import ThemeSwitcher from '../shared/ThemeSwitcher';
 import SearchBar from '../search/SearchBar';
 import { Profile } from '@/lib/types';
 import Image from 'next/image';
-import { LogOut, Edit, ChevronDown, Home, Clapperboard, Tv, List, Search, X, Orbit } from 'lucide-react';
+import { LogOut, Edit, ChevronDown, Home, Clapperboard, Tv, List, Search, X } from 'lucide-react';
 
 interface HeaderClientProps {
   user: User | null;
