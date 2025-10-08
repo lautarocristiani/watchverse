@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* === COLOR PALETTE === */
+
+  /* --- Main Accent Color (Sky Blue) --- */
+  --color-primary: #0ea5e9;            /* Vibrant sky blue (for buttons, active links) */
+  --color-primary-hover: #0284c7;      /* Darker sky blue for hover states */
+  --color-primary-foreground: #ffffff;  /* Text color for use on top of the primary color (white) */
+
+  /* --- Light Theme --- */
+  --color-background-light: #ffffff;      /* Main application background */
+  --color-card-light: #f8fafc;          /* Background for cards, menus, and elevated surfaces */
+  --color-text-main-light: #0f172a;      /* Main text color (almost black) */
+  --color-text-secondary-light: #64748b;  /* Color for secondary text, placeholders, etc. */
+  --color-border-light: #e2e8f0;         /* Color for borders and separators */
+  --color-hover-light: #f1f5f9;          /* Subtle background color for hovers in lists, etc. */
+
+  /* --- Dark Theme --- */
+  --color-background-dark: #020617;       /* Main background (a very dark, near-black blue) */
+  --color-card-dark: #0f172a;           /* Background for cards (a dark blue) */
+  --color-text-main-dark: #f8fafc;       /* Main text color (a soft white) */
+  --color-text-secondary-dark: #94a3b8;   /* Color for secondary text */
+  --color-border-dark: #1e293b;          /* Color for borders and separators */
+  --color-hover-dark: #1e293b;           /* Subtle background color for hover */
+
+  /* --- Additional Semantic Colors --- */
+  --color-destructive: #ef4444;       /* Red for delete buttons, errors */
+  --color-success: #22c55e;           /* Green for success messages */
+  --color-success-hover: #1a9949; 
+  --color-star: #facc15;             /* Yellow for rating stars */
+}
+
+@layer utilities {
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+        /* Safari and Chrome */
+    }
+}

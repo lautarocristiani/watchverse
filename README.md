@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Watchverse 🎬
 
-## Getting Started
+Welcome to Watchverse, your personal universe for discovering, tracking, and reviewing movies and TV series. This application is built with Next.js, using the TMDB API for media data and Supabase for all user-related features.
 
-First, run the development server:
+**[Live Demo](https://YOUR_VERCEL_URL_HERE)**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🖼️ Preview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![Watchverse Screenshot](doc/capture.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ✨ Key Features
 
-To learn more about Next.js, take a look at the following resources:
+-   **Full User Authentication**: Secure sign-up, sign-in, and password reset flows powered by Supabase Auth.
+-   **Movie & TV Discovery**: Browse extensive lists of popular, top-rated, and genre-specific media.
+-   **Detailed Media Pages**: View trailers, synopses, cast, ratings, and similar titles.
+-   **Personalized Lists**: Manage your own `Watchlist` and track your `Watched` history.
+-   **Reviews and Ratings**: Rate any movie or TV show and write your own public or private reviews.
+-   **Powerful Search**: Instantly search for any title across the entire TMDB database.
+-   **Profile Management**: Edit your username, full name, and upload a custom avatar via Supabase Storage.
+-   **Theme Switching**: Toggle between a sleek dark mode and a clean light mode.
+-   **Fully Responsive**: A seamless experience on desktop, tablet, and mobile devices.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tech Stack
 
-## Deploy on Vercel
+-   **Framework**: Next.js (App Router)
+-   **Language**: TypeScript
+-   **Styling**: Tailwind CSS
+-   **Backend & Database**: Supabase (Auth, Postgres, Storage)
+-   **External API**: The Movie Database (TMDB)
+-   **Deployment**: Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
