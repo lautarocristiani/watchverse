@@ -1,10 +1,7 @@
-// src/components/shared/MediaCard.tsx
-
 'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
-// Asegúrate de importar EnrichedMedia
 import { EnrichedMedia } from '@/lib/types';
 import MediaCardActions from './MediaCardActions';
 import { Star } from 'lucide-react';
@@ -13,7 +10,6 @@ import { User } from '@supabase/supabase-js';
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
 interface MediaCardProps {
-  // Usa el nuevo tipo aquí
   item: EnrichedMedia;
   type: 'movie' | 'tv';
   user: User | null;

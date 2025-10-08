@@ -14,7 +14,7 @@ interface LazyGenreRowProps {
     user: User | null;
     watchlistIds: number[];
     watchedIds: number[];
-    ratingsMap: Record<number, number>; // <-- 1. ACEPTA LA NUEVA PROP
+    ratingsMap: Record<number, number>;
 }
 
 const RowSkeleton = () => (
@@ -56,12 +56,10 @@ export default function LazyGenreRow({ genre, mediaType, user, watchlistIds, wat
     const enrichedItems: EnrichedMedia[] = useMemo(() => {
         return items.map(item => {
             const status = watchedIds.includes(item.id) ? 'watched' : (watchlistIds.includes(item.id) ? 'watchlist' : null);
-            // 3. BUSCA EL RATING EN EL MAPA
             const rating = ratingsMap[item.id] || null;
-            //    Y AÑÁDELO AL OBJETO
             return { ...item, user_status: status, user_rating: rating };
         });
-    }, [items, watchlistIds, watchedIds, ratingsMap]); // No olvides añadir ratingsMap a las dependencias
+    }, [items, watchlistIds, watchedIds, ratingsMap]);
 
     if (items.length === 0) {
         return <div ref={ref}><RowSkeleton /></div>;
@@ -77,8 +75,7 @@ export default function LazyGenreRow({ genre, mediaType, user, watchlistIds, wat
                     <MediaCard 
                         item={item} 
                         type={mediaType} 
-                        user={user} 
-                        // 4. PASA EL RATING FINAL A MEDIACARD
+                        user={user}
                         userRating={item.user_rating} 
                     />
                 </div>

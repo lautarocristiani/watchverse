@@ -11,7 +11,6 @@ import ReviewForm from '@/components/reviews/ReviewForm';
 import { Star } from 'lucide-react';
 import { User } from '@supabase/supabase-js';
 import { enrichMedia } from '@/lib/utils';
-import { EnrichedMedia } from '@/lib/types';
 
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original';
 const TMDB_POSTER_URL = 'https://image.tmdb.org/t/p/w500';
@@ -57,7 +56,6 @@ export default async function MovieDetailPage({ params }: { params: { id: string
             </section>
 
             <div className='container mx-auto px-4'>
-                {/* El margen negativo se aplica solo a esta primera sección */}
                 <section className="flex flex-col md:flex-row gap-8 -mt-[25vh] z-10 relative">
                     <div className="w-full max-w-[200px] md:max-w-[250px] mx-auto md:mx-0 flex-shrink-0">
                         <Image

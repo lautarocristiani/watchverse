@@ -16,10 +16,8 @@ export default function PaginatedGrid({ children, currentPage, totalPages, baseP
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // --- INICIO DE NUEVAS FUNCIONALIDADES ---
   const [pageInput, setPageInput] = useState(String(currentPage));
 
-  // Efecto para navegar cuando el usuario escribe en el input (con debounce)
   useEffect(() => {
     const handler = setTimeout(() => {
       const pageNum = parseInt(pageInput, 10);
@@ -33,21 +31,19 @@ export default function PaginatedGrid({ children, currentPage, totalPages, baseP
         params.set('page', String(pageNum));
         router.push(`${basePath}?${params.toString()}`);
       }
-    }, 800); // Espera 800ms después de que el usuario deja de teclear
+    }, 800);
 
     return () => clearTimeout(handler);
   }, [pageInput, currentPage, totalPages, basePath, searchParams, router]);
 
-  // Efecto para sincronizar el input si la página cambia por los botones
   useEffect(() => {
     setPageInput(String(currentPage));
   }, [currentPage]);
-  // --- FIN DE NUEVAS FUNCIONALIDADES ---
 
   const renderPagination = () => {
     const maxPagesToShow = 5;
     let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
-    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
 
     if (endPage - startPage + 1 < maxPagesToShow) {
       startPage = Math.max(1, endPage - maxPagesToShow + 1);
@@ -82,15 +78,7 @@ export default function PaginatedGrid({ children, currentPage, totalPages, baseP
         ))}
 
         <div className="hidden md:flex items-center text-sm text-text-secondary-light dark:text-text-secondary-dark">
-          <input
-            type="text"
-            value={pageInput}
-            onChange={(e) => setPageInput(e.target.value.replace(/[^0-9]/g, ''))}
-            placeholder="..."
-            title={`Go to page (1-${totalPages})`}
-            className="w-12 h-10 text-center bg-card-light border border-border-light rounded-md focus:ring-2 focus:ring-primary focus:outline-none dark:bg-card-dark dark:border-border-dark"
-            aria-label={`Current Page, Page ${currentPage} of ${totalPages}`}
-          />
+          / <span className='px-2'>{totalPages}</span>
         </div>
 
         {currentPage < totalPages && (

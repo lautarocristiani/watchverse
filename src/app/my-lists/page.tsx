@@ -1,5 +1,3 @@
-// src/app/my-lists/page.tsx
-
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { getMediaDetails } from '@/lib/tmdb';
@@ -17,14 +15,12 @@ export default async function MyListsPage() {
     redirect('/auth');
   }
 
-  // Obtenemos todos los datos del usuario de una vez, usando la nueva función para ratings
   const [watchlistItems, watchedItems, ratingsMap] = await Promise.all([
     getUserMediaListByStatus(supabase, user.id, 'watchlist'),
     getUserMediaListByStatus(supabase, user.id, 'watched'),
     getUserRatingsMap(supabase, user.id),
   ]);
 
-  // Función auxiliar para obtener detalles y enriquecer
   const getEnrichedDetails = async (
     items: { media_id: number, media_type: string }[],
     status: 'watchlist' | 'watched'
@@ -36,7 +32,6 @@ export default async function MyListsPage() {
     );
     const details = (await Promise.all(detailsPromises)).filter(Boolean);
 
-    // Enriquecemos con el status y el rating del usuario
     return details.map(detail => ({
       ...detail!,
       user_status: status,
@@ -91,7 +86,7 @@ export default async function MyListsPage() {
         ) : (
           <div>
             <h2 className="text-2xl font-bold mb-4">Watched History</h2>
-            <p className="text-text-secondary-light dark:text-text-secondary-dark">You haven't marked any items as watched yet.</p>
+            <p className="text-text-secondary-light dark:text-text-secondary-dark">You haven&apos;t marked any items as watched yet.</p>
           </div>
         )}
       </section>

@@ -56,8 +56,6 @@ export default function ReviewForm({ mediaId, mediaType, userReview }: ReviewFor
     }
     startTransition(async () => {
       const formData = new FormData();
-      // --- LÍNEA CORREGIDA ---
-      // Convertimos el 'id' numérico a un 'string' para FormData
       formData.append('reviewId', String(userReview.id));
       formData.append('mediaId', String(mediaId));
       formData.append('mediaType', mediaType);

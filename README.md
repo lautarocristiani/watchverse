@@ -8,7 +8,7 @@ Welcome to Watchverse, your personal universe for discovering, tracking, and rev
 
 ## 🖼️ Preview
 
-![Watchverse Screenshot](doc/capture.png)
+![Watchverse Screenshot](./docs/capture-watchverse.png)
 
 ---
 

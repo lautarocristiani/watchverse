@@ -23,19 +23,17 @@ export default async function WatchlistPage() {
 
     const mediaDetails = (await Promise.all(mediaDetailsPromises));
 
-    // Usamos .reduce() para construir un array limpio y con el tipo correcto
     const mediaOnWatchlist = mediaDetails.reduce<EnrichedMedia[]>((acc, media) => {
-        // Si el 'media' no es nulo, lo procesamos y lo añadimos al acumulador 'acc'
         if (media) {
             const originalItem = watchlistItems.find(i => i.media_id === media.id);
             acc.push({
                 ...media,
-                user_status: 'watchlist', // Asignamos el estado correcto
+                user_status: 'watchlist',
                 media_type: originalItem?.media_type as 'movie' | 'tv'
             });
         }
         return acc;
-    }, []); // El '[]' inicializa el acumulador como un array vacío de EnrichedMedia
+    }, []);
 
     return (
         <div className="container mx-auto px-4 py-8">

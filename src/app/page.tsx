@@ -1,5 +1,3 @@
-// src/app/page.tsx
-
 import GenreRow from '@/components/shared/GenreRow';
 import MediaCard from '@/components/shared/MediaCard';
 import { getMediaByFilter } from '@/lib/tmdb';
@@ -12,7 +10,6 @@ export default async function HomePage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Obtenemos todos los datos del usuario de una vez
   let watchlistIds: number[] = [];
   let watchedIds: number[] = [];
   let ratingsMap: Record<number, number> = {};
@@ -41,7 +38,6 @@ export default async function HomePage() {
     getMediaByFilter('tv', 1, 'vote_average.desc'),
   ]);
 
-  // Enriquecemos cada lista con los datos del usuario
   const popularMovies = enrichMedia(popularMoviesData.results, watchlistIds, watchedIds, ratingsMap);
   const nowPlayingMovies = enrichMedia(nowPlayingMoviesData.results, watchlistIds, watchedIds, ratingsMap);
   const popularSeries = enrichMedia(popularSeriesData.results, watchlistIds, watchedIds, ratingsMap);

@@ -23,7 +23,6 @@ export default function MediaCardActions({ mediaId, mediaType, initialWatchlist,
     e.stopPropagation();
 
     if (!user) {
-      // --- LÍNEA CORREGIDA ---
       alert('You must be logged in to add content to your lists.');
       return;
     }

@@ -5,9 +5,6 @@ import LazyGenreRow from '@/components/shared/LazyGenreRow';
 import { getMediaByFilter, getPopularMovies, getTopRatedMovies, getPopularTvShows, getTopRatedTvShows, getGenres } from '@/lib/tmdb';
 import { createClient } from '@/lib/supabase/server';
 import { User } from '@supabase/supabase-js';
-import { EnrichedMedia } from '@/lib/types';
-
-// --- PASO 1: Importar las nuevas funciones ---
 import { getUserMediaListByStatus, getUserRatingsMap } from '@/lib/supabase/queries';
 import { enrichMedia } from '@/lib/utils';
 
@@ -28,7 +25,6 @@ export default async function MediaTypePage({
   const basePath = mediaType === 'movies' ? '/movies' : '/series';
   const isFilteredView = !!sort || !!genre;
 
-  // --- PASO 2: Obtener TODOS los datos del usuario de una sola vez ---
   let watchlistIds: number[] = [];
   let watchedIds: number[] = [];
   let ratingsMap: Record<number, number> = {};
@@ -37,7 +33,7 @@ export default async function MediaTypePage({
     const [watchlistResult, watchedResult, userRatings] = await Promise.all([
       getUserMediaListByStatus(supabase, user.id, 'watchlist'),
       getUserMediaListByStatus(supabase, user.id, 'watched'),
-      getUserRatingsMap(supabase, user.id) // <--- Nueva llamada
+      getUserRatingsMap(supabase, user.id)
     ]);
     watchlistIds = watchlistResult.map(item => item.media_id);
     watchedIds = watchedResult.map(item => item.media_id);
@@ -49,7 +45,6 @@ export default async function MediaTypePage({
     const sortBy = sort || 'popularity.desc';
     const { results, total_pages } = await getMediaByFilter(type, currentPage, sortBy, genre);
     
-    // --- PASO 3: Usar la nueva función 'enrichMedia' ---
     const enrichedResults = enrichMedia(results, watchlistIds, watchedIds, ratingsMap);
 
     return (
@@ -60,7 +55,7 @@ export default async function MediaTypePage({
             item={item} 
             type={type} 
             user={user as User | null} 
-            userRating={item.user_rating} // <-- Pasar el rating a MediaCard
+            userRating={item.user_rating}
           />
         )}
       </PaginatedGrid>
@@ -73,7 +68,6 @@ export default async function MediaTypePage({
     getGenres(type)
   ]);
 
-  // --- PASO 3 (bis): Usar 'enrichMedia' para las filas principales ---
   const popularResults = enrichMedia(popularData.results, watchlistIds, watchedIds, ratingsMap);
   const topRatedResults = enrichMedia(topRatedData.results, watchlistIds, watchedIds, ratingsMap);
   const genresToLazyLoad = allGenres.slice(0, 10);

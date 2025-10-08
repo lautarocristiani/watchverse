@@ -50,7 +50,7 @@ export default async function WatchedPage() {
                         ))}
                     </div>
                 ) : (
-                    <p className="text-text-secondary-light dark:text-text-secondary-dark">You haven't marked any items as watched yet.</p>
+                    <p className="text-text-secondary-light dark:text-text-secondary-dark">You haven&apos;t marked any items as watched yet.</p>
                 )}
             </div>
         </div>

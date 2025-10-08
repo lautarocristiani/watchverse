@@ -1,14 +1,17 @@
-// src/lib/tmdb.ts
 import { Genre, Media } from './types';
 
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
-// Función auxiliar para hacer peticiones a la API de TMDB
+interface TmdbApiResponse {
+    results: Media[];
+    total_pages: number;
+}
+
 async function fetchFromTMDB(endpoint: string, params: string = '') {
   const url = `${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}&language=en-US&${params}`;
   try {
-    const response = await fetch(url, { next: { revalidate: 3600 } }); // Cache por 1 hora
+    const response = await fetch(url, { next: { revalidate: 3600 } });
     if (!response.ok) {
         console.error(`Error fetching from TMDB: ${response.statusText}`);
         return null;
@@ -20,17 +23,18 @@ async function fetchFromTMDB(endpoint: string, params: string = '') {
   }
 }
 
-// Formateador de resultados para asegurar que tenemos los datos y filtramos contenido sin póster
-function formatResults(data: any): { results: Media[], total_pages: number } {
+function formatResults(data: TmdbApiResponse | null): { results: Media[], total_pages: number } {
     const filteredResults = data?.results.filter((item: Media) => item.poster_path);
+    
+    const total = data?.total_pages ?? 1;
+    
+    const total_pages = total > 500 ? 500 : total;
+
     return {
         results: filteredResults || [],
-        // La API de TMDB limita la paginación a la página 500
-        total_pages: data?.total_pages > 500 ? 500 : data?.total_pages || 1,
+        total_pages: total_pages,
     };
 }
-
-// --- FUNCIONES EXISTENTES ---
 
 export async function getGenres(mediaType: 'movie' | 'tv'): Promise<Genre[]> {
   const data = await fetchFromTMDB(`/genre/${mediaType}/list`);
@@ -54,17 +58,14 @@ export async function getMediaDetails(mediaType: 'movie' | 'tv', id: string): Pr
 
 export async function searchMedia(query: string, page: number = 1): Promise<{ results: Media[], total_pages: number }> {
   const data = await fetchFromTMDB('/search/multi', `query=${encodeURIComponent(query)}&page=${page}&include_adult=false`);
-  // Filtramos para quitar personas de los resultados de búsqueda
+  
   const filteredData = {
     ...data,
-    results: data?.results.filter((item: any) => item.media_type === 'movie' || item.media_type === 'tv'),
+    results: data?.results.filter((item: Media) => item.media_type === 'movie' || item.media_type === 'tv'),
   };
   return formatResults(filteredData);
 }
 
-// --- NUEVAS FUNCIONES PARA LAS FILAS ---
-
-// Películas
 export async function getPopularMovies(params: { page: number }): Promise<{ results: Media[], total_pages: number }> {
   const data = await fetchFromTMDB('/movie/popular', `page=${params.page}`);
   return formatResults(data);
@@ -80,7 +81,6 @@ export async function getMoviesByGenre(genreId: string, params: { page: number }
   return formatResults(data);
 }
 
-// Series de TV
 export async function getPopularTvShows(params: { page: number }): Promise<{ results: Media[], total_pages: number }> {
   const data = await fetchFromTMDB('/tv/popular', `page=${params.page}`);
   return formatResults(data);

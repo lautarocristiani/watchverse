@@ -1,5 +1,3 @@
-// app/auth/update-password/page.tsx
-
 'use client';
 
 import { useState } from 'react';
@@ -21,11 +19,11 @@ export default function UpdatePasswordPage() {
         setMessage('');
 
         if (password !== confirmPassword) {
-            setError("Las contraseñas no coinciden.");
+            setError("Passwords do not match.");
             return;
         }
         if (password.length < 8) {
-            setError("La contraseña debe tener al menos 8 caracteres.");
+            setError("Password must be at least 8 characters long.");
             return;
         }
 
@@ -37,7 +35,7 @@ export default function UpdatePasswordPage() {
         if (error) {
             setError(error.message);
         } else {
-            setMessage("¡Tu contraseña ha sido cambiada con éxito! Redirigiendo...");
+            setMessage("Your password has been changed successfully! Redirecting...");
             setTimeout(() => {
                 router.push('/auth');
             }, 3000);
@@ -48,19 +46,17 @@ export default function UpdatePasswordPage() {
     return (
         <div className="bg-background-dark min-h-screen flex items-center justify-center p-4">
             <div className="w-full max-w-md">
-                {/* --- Logo y Título de la Marca --- */}
                 <div className="text-center mb-8">
                     <div className="flex items-center justify-center gap-2 mb-2">
                          <Film className="h-8 w-8 text-primary" />
                          <h1 className="text-3xl font-bold text-white">WATCHVERSE</h1>
                     </div>
-                    <p className="text-text-secondary-dark">Recupera el acceso a tu universo de películas.</p>
+                    <p className="text-text-secondary-dark">Regain access to your universe of movies.</p>
                 </div>
 
-                {/* --- Tarjeta del Formulario --- */}
                 <div className="bg-slate-900/50 border border-slate-800 rounded-lg shadow-xl p-8 space-y-6">
                     <div>
-                        <h2 className="text-2xl font-semibold text-center text-white">Crea una nueva contraseña</h2>
+                        <h2 className="text-2xl font-semibold text-center text-white">Set a New Password</h2>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
@@ -69,7 +65,7 @@ export default function UpdatePasswordPage() {
                                 htmlFor="password" 
                                 className="block text-sm font-medium text-slate-400 mb-1"
                             >
-                                Nueva Contraseña
+                                New Password
                             </label>
                             <input
                                 id="password"
@@ -86,7 +82,7 @@ export default function UpdatePasswordPage() {
                                 htmlFor="confirmPassword" 
                                 className="block text-sm font-medium text-slate-400 mb-1"
                             >
-                                Confirmar Nueva Contraseña
+                                Confirm New Password
                             </label>
                             <input
                                 id="confirmPassword"
@@ -104,7 +100,7 @@ export default function UpdatePasswordPage() {
                             disabled={loading}
                             className="w-full bg-primary hover:bg-primary-hover text-primary-foreground font-bold py-3 px-4 rounded-md transition-all duration-300 ease-in-out flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Actualizar Contraseña'}
+                            {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Update Password'}
                         </button>
                     </form>
 
