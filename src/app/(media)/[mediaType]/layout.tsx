@@ -2,6 +2,10 @@ import FilterBar from "@/components/shared/FilterBar";
 import { getGenres } from "@/lib/tmdb";
 import React from "react";
 
+export async function generateStaticParams() {
+  return [{ mediaType: 'movies' }, { mediaType: 'series' }];
+}
+
 type MediaLayoutProps = {
   children: React.ReactNode;
   params: Promise<{ mediaType: 'movies' | 'series' }>;

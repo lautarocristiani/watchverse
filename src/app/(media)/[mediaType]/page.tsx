@@ -8,6 +8,7 @@ import { User } from '@supabase/supabase-js';
 import { getUserMediaListByStatus, getUserRatingsMap } from '@/lib/supabase/queries';
 import { enrichMedia } from '@/lib/utils';
 
+
 export async function generateStaticParams() {
   return [{ mediaType: 'movies' }, { mediaType: 'series' }];
 }
