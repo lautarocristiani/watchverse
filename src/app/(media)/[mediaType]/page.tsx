@@ -8,16 +8,11 @@ import { User } from '@supabase/supabase-js';
 import { getUserMediaListByStatus, getUserRatingsMap } from '@/lib/supabase/queries';
 import { enrichMedia } from '@/lib/utils';
 
-
-export async function generateStaticParams() {
-  return [{ mediaType: 'movies' }, { mediaType: 'series' }];
-}
-
 export default async function MediaTypePage({
   params,
   searchParams,
 }: {
-  params: Promise<{ mediaType: 'movies' | 'series' }>;
+  params: Promise<{ mediaType: string }>;
   searchParams: Promise<{ page?: string; sort?: string; genre?: string }>;
 }) {
   const supabase = await createClient();
@@ -26,7 +21,7 @@ export default async function MediaTypePage({
   const [resolvedParams, resolvedSearchParams] = await Promise.all([params, searchParams]);
 
   const { mediaType } = resolvedParams;
-  const { page, sort, genre } = resolvedSearchParams;
+  const { page, sort, genre } = await searchParams;
 
   const type = mediaType === 'movies' ? 'movie' : 'tv';
   const basePath = mediaType === 'movies' ? '/movies' : '/series';
