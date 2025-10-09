@@ -1,5 +1,3 @@
-// src/lib/types.ts
-
 export interface Media {
   id: number;
   title?: string;
@@ -17,12 +15,10 @@ export interface Media {
   media_type?: 'movie' | 'tv';
 }
 
-// --- AÑADE ESTE NUEVO TIPO ---
 export type EnrichedMedia = Media & {
   user_status: 'watchlist' | 'watched' | null;
   user_rating?: number | null;
 };
-// -----------------------------
 
 export interface Genre {
   id: number;
