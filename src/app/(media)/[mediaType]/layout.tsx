@@ -12,6 +12,10 @@ type MediaLayoutProps = {
 };
 
 export default async function MediaLayout({ children, params }: MediaLayoutProps) {
+    // 👇 *** AÑADE ESTA LÍNEA EXACTAMENTE AQUÍ ***
+    console.log("--- VERCEL ESTÁ USANDO LA VERSIÓN CORRECTA DE ESTE LAYOUT ---");
+    // ------------------------------------
+    
     const resolvedParams = await params;
     
     const type = resolvedParams.mediaType === 'movies' ? 'movie' : 'tv';
