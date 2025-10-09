@@ -11,19 +11,19 @@ import { EnrichedMedia, Media } from "@/lib/types";
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { query?: string; page?: string };
+  searchParams: Promise<{ query?: string; page?: string }>;
 }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  const { query: searchQuery, page: pageParam } = searchParams;
+  const { query: searchQuery, page: pageParam } = await searchParams;
   
   const query = searchQuery || "";
   const page = Number(pageParam) || 1;
 
   const { results: media, total_pages } = await searchMedia(query, page);
 
-  let enrichedMedia: EnrichedMedia[] = media.map(m => ({ ...m, user_status: null }));
+  let enrichedMedia: EnrichedMedia[] = media.map(m => ({ ...m, user_status: null, user_rating: null }));
 
   if (user && media.length > 0) {
     const movieIds = media.filter(m => m.media_type === 'movie').map(m => m.id);
@@ -38,7 +38,8 @@ export default async function SearchPage({
 
     enrichedMedia = media.map(item => ({
       ...item,
-      user_status: statusMap[item.id] || null
+      user_status: statusMap[item.id] || null,
+      user_rating: null // Se mantiene null ya que esta página no maneja ratings
     }));
   }
 
