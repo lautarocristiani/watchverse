@@ -12,14 +12,16 @@ export default async function MediaTypePage({
   params,
   searchParams,
 }: {
-  params: { mediaType: 'movies' | 'series' };
-  searchParams: { page?: string; sort?: string; genre?: string };
+  params: Promise<{ mediaType: 'movies' | 'series' }>;
+  searchParams: Promise<{ page?: string; sort?: string; genre?: string }>;
 }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  const { mediaType } = params;
-  const { page, sort, genre } = searchParams;
+  const [resolvedParams, resolvedSearchParams] = await Promise.all([params, searchParams]);
+
+  const { mediaType } = resolvedParams;
+  const { page, sort, genre } = resolvedSearchParams;
 
   const type = mediaType === 'movies' ? 'movie' : 'tv';
   const basePath = mediaType === 'movies' ? '/movies' : '/series';
@@ -92,13 +94,13 @@ export default async function MediaTypePage({
       
       {genresToLazyLoad.map(g => (
         <LazyGenreRow 
-            key={g.id} 
-            genre={g} 
-            mediaType={type} 
-            user={user as User | null} 
-            watchlistIds={watchlistIds}
-            watchedIds={watchedIds}
-            ratingsMap={ratingsMap}
+          key={g.id} 
+          genre={g} 
+          mediaType={type} 
+          user={user as User | null} 
+          watchlistIds={watchlistIds}
+          watchedIds={watchedIds}
+          ratingsMap={ratingsMap}
         />
       ))}
     </div>

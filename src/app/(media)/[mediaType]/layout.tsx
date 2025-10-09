@@ -4,11 +4,13 @@ import React from "react";
 
 type MediaLayoutProps = {
   children: React.ReactNode;
-  params: { mediaType: 'movies' | 'series' };
+  params: Promise<{ mediaType: 'movies' | 'series' }>;
 };
 
 export default async function MediaLayout({ children, params }: MediaLayoutProps) {
-    const type = params.mediaType === 'movies' ? 'movie' : 'tv';
+    const resolvedParams = await params;
+    
+    const type = resolvedParams.mediaType === 'movies' ? 'movie' : 'tv';
     const genres = await getGenres(type);
 
     return (

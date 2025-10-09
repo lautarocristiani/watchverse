@@ -11,13 +11,12 @@ import ReviewForm from '@/components/reviews/ReviewForm';
 import { Star } from 'lucide-react';
 import { User } from '@supabase/supabase-js';
 import { enrichMedia } from '@/lib/utils';
-import { EnrichedMedia } from '@/lib/types';
 
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original';
 const TMDB_POSTER_URL = 'https://image.tmdb.org/t/p/w500';
 
-export default async function TvShowDetailPage({ params }: { params: { id: string } }) {
-    const { id } = params;
+export default async function TvShowDetailPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const mediaType = 'tv';
 
     const supabase = await createClient();
