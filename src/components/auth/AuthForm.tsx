@@ -2,15 +2,19 @@
 
 import { useState } from 'react';
 import { signUpAction, signInAction } from '@/lib/supabase/actions';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Eye, EyeOff } from 'lucide-react'; // Importamos Eye y EyeOff
 
 export default function AuthForm() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  // Estados para la visibilidad de la contraseña
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    // ... (lógica de handleSubmit sin cambios) ...
     event.preventDefault();
     setLoading(true);
     setMessage('');
@@ -20,22 +24,22 @@ export default function AuthForm() {
     const password = formData.get('password') as string;
 
     if (isSignUp) {
-        const confirmPassword = formData.get('confirmPassword') as string;
-        if (password !== confirmPassword) {
-            setError("Passwords do not match.");
-            setLoading(false);
-            return;
-        }
+      const confirmPassword = formData.get('confirmPassword') as string;
+      if (password !== confirmPassword) {
+        setError("Passwords do not match.");
+        setLoading(false);
+        return;
+      }
     }
-    
+
     const action = isSignUp ? signUpAction : signInAction;
     const result = await action(formData);
 
     if (result && 'error' in result && result.error) {
-        setError(result.error);
+      setError(result.error);
     }
     if (result && 'success' in result && result.success) {
-        setMessage(result.success);
+      setMessage(result.success);
     }
     setLoading(false);
   };
@@ -45,8 +49,9 @@ export default function AuthForm() {
       <h1 className="text-text-main-light dark:text-text-main-dark text-2xl font-bold mb-6 text-center">
         {isSignUp ? 'Create an Account' : 'Sign In'}
       </h1>
-      
+
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* ... (input de username e email sin cambios) ... */}
         {isSignUp && (
           <div>
             <label htmlFor="username" className="sr-only">Username</label>
@@ -57,17 +62,55 @@ export default function AuthForm() {
           <label htmlFor="email" className="sr-only">Email</label>
           <input id="email" type="email" name="email" placeholder="your.email@example.com" required className="w-full p-3 bg-background-light rounded-md border border-border-light focus:ring-primary focus:border-primary dark:bg-background-dark dark:border-border-dark" />
         </div>
+
+        {/* Campo de Contraseña */}
         <div>
-          <label htmlFor="password"className="sr-only">Password</label>
-          <input id="password" type="password" name="password" placeholder="••••••••" minLength={6} required className="w-full p-3 bg-background-light rounded-md border border-border-light focus:ring-primary focus:border-primary dark:bg-background-dark dark:border-border-dark" />
+          <label htmlFor="password" className="sr-only">Password</label>
+          <div className="relative">
+            <input
+              id="password"
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              placeholder="••••••••"
+              minLength={6}
+              required
+              className="w-full p-3 bg-background-light rounded-md border border-border-light focus:ring-primary focus:border-primary dark:bg-background-dark dark:border-border-dark pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
         </div>
+
+        {/* Campo de Confirmar Contraseña (solo para Sign Up) */}
         {isSignUp && (
           <div>
-            <label htmlFor="confirmPassword"className="sr-only">Confirm Password</label>
-            <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm Password" required className="w-full p-3 bg-background-light rounded-md border border-border-light focus:ring-primary focus:border-primary dark:bg-background-dark dark:border-border-dark" />
+            <label htmlFor="confirmPassword" className="sr-only">Confirm Password</label>
+            <div className="relative">
+              <input
+                id="confirmPassword"
+                type={showConfirmPassword ? 'text' : 'password'}
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                required
+                className="w-full p-3 bg-background-light rounded-md border border-border-light focus:ring-primary focus:border-primary dark:bg-background-dark dark:border-border-dark pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+              >
+                {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
           </div>
         )}
 
+        {/* ... (resto del formulario sin cambios) ... */}
         <button type="submit" disabled={loading} className="w-full bg-primary hover:bg-primary-hover text-primary-foreground font-bold py-3 px-4 rounded-md transition-colors flex items-center justify-center disabled:opacity-50">
           {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {isSignUp ? 'Sign Up' : 'Sign In'}

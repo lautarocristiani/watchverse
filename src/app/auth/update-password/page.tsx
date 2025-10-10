@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
-import { Loader2, Film } from 'lucide-react';
+import { Loader2, Orbit, Eye, EyeOff } from 'lucide-react';
 
 export default function UpdatePasswordPage() {
     const router = useRouter();
@@ -12,6 +12,8 @@ export default function UpdatePasswordPage() {
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -37,22 +39,23 @@ export default function UpdatePasswordPage() {
         } else {
             setMessage("Your password has been changed successfully! Redirecting...");
             setTimeout(() => {
-                router.push('/auth');
+                router.push('/'); // Redirigir a la página principal
             }, 3000);
         }
         setLoading(false);
     };
-    
+
     return (
         <div className="bg-background-dark min-h-screen flex items-center justify-center p-4">
             <div className="w-full max-w-md">
                 <div className="text-center mb-8">
                     <div className="flex items-center justify-center gap-2 mb-2">
-                         <Film className="h-8 w-8 text-primary" />
-                         <h1 className="text-3xl font-bold text-white">WATCHVERSE</h1>
+                        <Orbit className="h-8 w-8 text-primary" />
+                        <h1 className="text-3xl font-bold text-white">WATCHVERSE</h1>
                     </div>
                     <p className="text-text-secondary-dark">Regain access to your universe of movies.</p>
                 </div>
+
 
                 <div className="bg-slate-900/50 border border-slate-800 rounded-lg shadow-xl p-8 space-y-6">
                     <div>
@@ -60,43 +63,58 @@ export default function UpdatePasswordPage() {
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
+                        {/* Campo de Nueva Contraseña */}
                         <div>
-                            <label 
-                                htmlFor="password" 
-                                className="block text-sm font-medium text-slate-400 mb-1"
-                            >
+                            <label htmlFor="password" className="block text-sm font-medium text-slate-400 mb-1">
                                 New Password
                             </label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="mt-1 block w-full p-3 bg-slate-800 text-white rounded-md border border-slate-700 focus:ring-primary focus:border-primary placeholder-slate-500"
-                            />
+                            <div className="relative">
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="mt-1 block w-full p-3 bg-slate-800 text-white rounded-md border border-slate-700 focus:ring-primary focus:border-primary placeholder-slate-500 pr-10"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute inset-y-0 right-0 flex items-center px-3 text-slate-400 hover:text-white"
+                                >
+                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
+                            </div>
                         </div>
+
+                        {/* Campo de Confirmar Contraseña */}
                         <div>
-                            <label 
-                                htmlFor="confirmPassword" 
-                                className="block text-sm font-medium text-slate-400 mb-1"
-                            >
+                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-400 mb-1">
                                 Confirm New Password
                             </label>
-                            <input
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                type="password"
-                                required
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                className="mt-1 block w-full p-3 bg-slate-800 text-white rounded-md border border-slate-700 focus:ring-primary focus:border-primary placeholder-slate-500"
-                            />
+                            <div className="relative">
+                                <input
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    type={showConfirmPassword ? 'text' : 'password'}
+                                    required
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    className="mt-1 block w-full p-3 bg-slate-800 text-white rounded-md border border-slate-700 focus:ring-primary focus:border-primary placeholder-slate-500 pr-10"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    className="absolute inset-y-0 right-0 flex items-center px-3 text-slate-400 hover:text-white"
+                                >
+                                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
+                            </div>
                         </div>
-                        
-                        <button 
-                            type="submit" 
+
+                        <button
+                            type="submit"
                             disabled={loading}
                             className="w-full bg-primary hover:bg-primary-hover text-primary-foreground font-bold py-3 px-4 rounded-md transition-all duration-300 ease-in-out flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                         >
