@@ -2,7 +2,7 @@
 
 Welcome to Watchverse, your personal universe for discovering, tracking, and reviewing movies and TV series. This application is built with Next.js, using the TMDB API for media data and Supabase for all user-related features.
 
-**[Live Demo](https://YOUR_VERCEL_URL_HERE)**
+**[Live Demo](https://watchverse-sigma.vercel.app)**
 
 ---
 
