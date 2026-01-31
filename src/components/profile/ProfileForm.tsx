@@ -48,6 +48,7 @@ export default function ProfileForm({ profile }: { profile: Profile }) {
                     width={96}
                     height={96}
                     className="rounded-full w-24 h-24 object-cover border-2 border-border-light dark:border-border-dark"
+                    unoptimized
                 />
                 <input 
                     type="file" 

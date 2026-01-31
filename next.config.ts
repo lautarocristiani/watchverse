@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    // External images use unoptimized to avoid Vercel Image Transformations consumption.
+    // TMDB, avatars, etc. are served directly from origin - no optimization needed.
     remotePatterns: [
       {
         protocol: 'https',
@@ -14,6 +16,12 @@ const nextConfig: NextConfig = {
         hostname: 'ui-avatars.com',
         port: '',
         pathname: '/api/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.dicebear.com',
+        port: '',
+        pathname: '/**',
       },
       {
         protocol: 'https',

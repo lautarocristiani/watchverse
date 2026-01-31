@@ -18,6 +18,7 @@ export default function ReviewList({ reviews }: { reviews: Review[] }) {
             width={40}
             height={40}
             className="rounded-full w-10 h-10 object-cover mt-1 flex-shrink-0"
+            unoptimized
           />
           <div className="flex-1 min-w-0">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">

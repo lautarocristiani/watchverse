@@ -95,7 +95,7 @@ export default function HeaderClient({ user: initialUser, profile: initialProfil
             <div className="relative" ref={dropdownRef}>
               <button className="flex items-center gap-2 cursor-pointer" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
                 <span className="hidden lg:inline text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">{profile.username}</span>
-                <Image src={avatarSrc} alt={profile.username} width={32} height={32} className="rounded-full w-8 h-8 object-cover border border-border-light dark:border-border-dark" />
+                <Image src={avatarSrc} alt={profile.username} width={32} height={32} className="rounded-full w-8 h-8 object-cover border border-border-light dark:border-border-dark" unoptimized />
                 <ChevronDown className={`w-4 h-4 text-text-secondary-light dark:text-text-secondary-dark transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
               {isDropdownOpen && (

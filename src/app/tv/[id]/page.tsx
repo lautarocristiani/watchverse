@@ -51,7 +51,7 @@ export default async function TvShowDetailPage({ params }: { params: Promise<{ i
             <section className="relative h-[50vh] md:h-[60vh]">
                 <BackButton href="/series" />
                 {tvShow.backdrop_path && (
-                    <Image src={`${TMDB_IMAGE_BASE_URL}${tvShow.backdrop_path}`} alt={`Backdrop for ${title}`} fill className="object-cover object-top" priority />
+                    <Image src={`${TMDB_IMAGE_BASE_URL}${tvShow.backdrop_path}`} alt={`Backdrop for ${title}`} fill className="object-cover object-top" priority unoptimized />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-background-light via-background-light/80 to-transparent dark:from-background-dark dark:via-background-dark/80" />
             </section>
@@ -65,6 +65,7 @@ export default async function TvShowDetailPage({ params }: { params: Promise<{ i
                             width={300}
                             height={450}
                             className="rounded-lg shadow-2xl"
+                            unoptimized
                         />
                     </div>
                     <div className="w-full md:w-3/4 pt-4 md:pt-16 text-center md:text-left space-y-4">

@@ -177,7 +177,6 @@ export async function deleteReviewAction(formData: FormData) {
   return { success: 'Review deleted successfully.' };
 }
 
-// --- USER MEDIA STATUS ACTION ---
 export async function updateMediaStatus(
   mediaId: number,
   mediaType: 'movie' | 'tv',
