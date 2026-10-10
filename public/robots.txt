@@ -1,0 +1,4 @@
+# Demo project: nothing here needs indexing, and every crawled page used to wake a
+# serverless function. Without this file /robots.txt itself rendered the app.
+User-agent: *
+Disallow: /
